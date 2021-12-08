@@ -1,4 +1,7 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿const pathname = window.location.pathname;
 
-// Write your JavaScript code.
+if (pathname === '/') {
+    document.querySelectorAll('a[href="' + pathname + '"]')[1].classList.add('active');
+} else {
+    document.querySelector('a[href="' + pathname + '"]').classList.add('active');
+}
