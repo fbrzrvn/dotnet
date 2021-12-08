@@ -16298,6 +16298,11 @@
   "RootNamespace": "MovieApp",
   "Documents": [
     {
+      "FilePath": "/Users/faber/Desktop/MovieApp/MovieApp/Views/Movies/Delete.cshtml",
+      "TargetPath": "Views\\Movies\\Delete.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/Users/faber/Desktop/MovieApp/MovieApp/Views/Shared/_ValidationScriptsPartial.cshtml",
       "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "FileKind": "mvc"
@@ -16305,6 +16310,21 @@
     {
       "FilePath": "/Users/faber/Desktop/MovieApp/MovieApp/Views/Shared/_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/faber/Desktop/MovieApp/MovieApp/Views/Movies/Edit.cshtml",
+      "TargetPath": "Views\\Movies\\Edit.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/faber/Desktop/MovieApp/MovieApp/Views/Movies/Index.cshtml",
+      "TargetPath": "Views\\Movies\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/faber/Desktop/MovieApp/MovieApp/Views/Movies/Create.cshtml",
+      "TargetPath": "Views\\Movies\\Create.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -16325,6 +16345,11 @@
     {
       "FilePath": "/Users/faber/Desktop/MovieApp/MovieApp/Views/_ViewStart.cshtml",
       "TargetPath": "Views\\_ViewStart.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/faber/Desktop/MovieApp/MovieApp/Views/Movies/Details.cshtml",
+      "TargetPath": "Views\\Movies\\Details.cshtml",
       "FileKind": "mvc"
     },
     {
