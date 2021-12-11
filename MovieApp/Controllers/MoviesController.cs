@@ -19,10 +19,34 @@ namespace MovieApp.Controllers
             _context = context;
         }
 
-        // GET: Movies
-        public async Task<IActionResult> Index()
+        // GET: /Movies
+        public async Task<IActionResult> Index(string genre, string title)
         {
-            return View(await _context.Movie.ToListAsync());
+            // Use LINQ to get list of genres
+            IQueryable<string> genreQuery = from m in _context.Movie
+                                            orderby m.Genre
+                                            select m.Genre;
+
+            var movies = from m in _context.Movie
+                         select m;
+
+            if (!string.IsNullOrEmpty(title))
+            {
+                movies = movies.Where(m => m.Title.Contains(title));
+            }
+
+            if (!string.IsNullOrEmpty(genre))
+            {
+                movies = movies.Where(m => m.Genre == genre);
+            }
+
+            var movieGenre = new MovieGenre
+            {
+                Genres = new SelectList(await genreQuery.Distinct().ToListAsync()),
+                Movies = await movies.ToListAsync()
+            };
+
+            return View(movieGenre);
         }
 
         // GET: Movies/Details/5
