@@ -32,6 +32,7 @@ public static class ContractMapper
             Id = movie.Id,
             Title = movie.Title,
             YearOfRelease = movie.YearOfRelease,
+            Slug = movie.Slug,
             Genres = movie.Genres.ToList(),
         };
     }
