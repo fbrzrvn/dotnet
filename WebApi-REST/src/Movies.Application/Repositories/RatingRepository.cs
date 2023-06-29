@@ -18,9 +18,9 @@ public class RatingRepository : IRatingRepository
         using var connection = await _dbConnectionFactory.CreateConnectionAsync(token);
 
         var result = await connection.ExecuteAsync(new CommandDefinition("""
-            insert into ratings(userid, movieid, rating) 
+            insert into ratings(userid, movieid, rating)
             values (@userId, @movieId, @rating)
-            on conflict (userid, movieid) do update 
+            on conflict (userid, movieid) do update
                 set rating = @rating
             """, new { userId, movieId, rating }, cancellationToken: token)
         );
@@ -82,5 +82,4 @@ public class RatingRepository : IRatingRepository
             """, new { userId }, cancellationToken: token)
         );
     }
-
 }
