@@ -56,7 +56,7 @@ public class MoviesController : ControllerBase
             return NotFound();
         }
 
-        return Ok(movie);
+        return Ok(movie.MapToResponse());
     }
 
     [Authorize(AuthConstants.TrustedMemberPolicyName)]

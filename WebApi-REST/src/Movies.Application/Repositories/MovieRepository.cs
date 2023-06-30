@@ -62,7 +62,7 @@ public class MovieRepository : IMovieRepository
                 myr.rating as userrating
             from movies m
             left join genres g on m.id = g.movieid
-            left join ratings r on m.id = g.movieid
+            left join ratings r on m.id = r.movieid
             left join ratings myr on m.id = myr.movieid
                 and myr.userid = @userId
             where (@title is null or m.title like ('%' || @title || '%'))
