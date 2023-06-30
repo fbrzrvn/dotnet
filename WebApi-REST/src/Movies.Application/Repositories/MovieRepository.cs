@@ -68,7 +68,16 @@ public class MovieRepository : IMovieRepository
             where (@title is null or m.title like ('%' || @title || '%'))
             and (@yearofrelease is null or m.yearofrelease = @yearofrelease)
             group by id, userrating {orderClause}
-            """, new { userId = options.UserId, title = options.Title, yearofrelease = options.Year }, cancellationToken: token)
+            limit @limit
+            offset @pageOffset
+            """, new
+        {
+            userId = options.UserId,
+            title = options.Title,
+            yearofrelease = options.Year,
+            limit = options.Limit,
+            pageOffset = (options.Page - 1) * options.Limit
+        }, cancellationToken: token)
         );
 
         return result.Select(x => new Movie
@@ -208,6 +217,18 @@ public class MovieRepository : IMovieRepository
         return await connection.ExecuteScalarAsync<bool>(new CommandDefinition("""
             select count(1) from movies where id = @id
             """, new { id }, cancellationToken: token)
+        );
+    }
+
+    public async Task<int> GetCountAsync(string? title, int? yearOfRelease, CancellationToken token = default)
+    {
+        using var connection = await _dbConnectionFactory.CreateConnectionAsync(token);
+
+        return await connection.QuerySingleAsync<int>(new CommandDefinition("""
+            select count(id) from movies
+            where (@title is null or title like ('%' || @title || '%'))
+            and (@yearOfRelease is null or yearofrelease = @yearOfRelease)
+            """, new { title, yearOfRelease }, cancellationToken: token)
         );
     }
 }
