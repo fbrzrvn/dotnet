@@ -50,7 +50,17 @@ builder.Services.AddApiVersioning(x =>
     x.ApiVersionReader = new MediaTypeApiVersionReader("api-version");
 }).AddMvc().AddApiExplorer();
 
-// Add services to the container.
+// builder.Services.AddResponseCaching(); Cache the response in the client
+builder.Services.AddOutputCache(x =>
+{
+    x.AddBasePolicy(c => c.Cache());
+    x.AddPolicy("MovieCache", c =>
+        c.Cache()
+        .Expire(TimeSpan.FromMinutes(1))
+        .SetVaryByQuery(new[] { "title", "year", "sortBy", "page", "limit" })
+        .Tag("movies"));
+}); // Cache the output from the server
+
 builder.Services.AddControllers();
 
 builder.Services.AddHealthChecks().AddCheck<DatabaseHealthCheck>(DatabaseHealthCheck.Name);
@@ -84,6 +94,10 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCors();
+// app.UseResponseCaching(); Cache the response in the client 
+app.UseOutputCache(); // Cache the output from the server
 
 app.UseMiddleware<ValidationMapperMiddleware>();
 app.MapControllers();
