@@ -35,7 +35,7 @@ public class MoviesController : ControllerBase
         await _outputCacheStore.EvictByTagAsync("movies", token);
 
         //return Created($"/{ApiEndpoints.Movies.Create}/{movie.Id}", movie);
-        return CreatedAtAction(nameof(Get), new { idOrSlug = movie.Id }, movie);
+        return CreatedAtAction(nameof(Get), new { idOrSlug = movie.Id }, movie.MapToResponse());
     }
 
     [HttpGet(ApiEndpoints.Movies.GetAll)]
