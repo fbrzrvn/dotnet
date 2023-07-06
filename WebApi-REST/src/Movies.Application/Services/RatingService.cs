@@ -32,12 +32,7 @@ public class RatingService : IRatingService
 
         var movieExists = await _movieRepository.ExistsByIdAsync(movieId, token);
 
-        if (!movieExists)
-        {
-            return false;
-        }
-
-        return await _ratingRepository.RateMovieAsync(movieId, rating, userId, token);
+        return movieExists && await _ratingRepository.RateMovieAsync(movieId, rating, userId, token);
     }
 
     public async Task<bool> DeleteRatingAsync(Guid movieId, Guid userId, CancellationToken token = default)

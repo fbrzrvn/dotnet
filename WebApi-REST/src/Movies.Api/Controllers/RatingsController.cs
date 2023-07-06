@@ -54,8 +54,8 @@ public class RatingsController : ControllerBase
 
         var ratings = await _ratingService.GetRatingsForUserAsync(userId!.Value, token);
 
-        var ratingsReponse = ratings.MapToResponse();
+        var ratingsResponse = ratings.MapToResponse();
 
-        return Ok(ratingsReponse);
+        return Ok(ratingsResponse);
     }
 }
