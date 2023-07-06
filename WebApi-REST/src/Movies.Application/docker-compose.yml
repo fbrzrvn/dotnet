@@ -4,10 +4,9 @@ services:
     db:
         container_name: postgres
         image: postgres:latest
-        restart: always
         environment:
             - POSTGRES_USER=lerelle
             - POSTGRES_PASSWORD=lerelle-password
             - POSTGRES_DB=movies
         ports:
-         - '5432:5432'
+            - '5432:5432'
