@@ -16,7 +16,7 @@ public class RatingService : IRatingService
         _ratingRepository = ratingRepository;
     }
 
-    public async Task<bool> RateMovieAsync(Guid movieId, int rating, Guid userId, CancellationToken token)
+    public async Task<bool> RateMovieAsync(Guid movieId, int rating, Guid userId, CancellationToken token = default)
     {
         if (rating is <= 0 or > 5)
         {
