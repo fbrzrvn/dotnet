@@ -96,6 +96,14 @@ public class ValueSamplesTests
     }
 
     [Fact]
+    public void TestingInternalMembersExample()
+    {
+        var number = _sut.InternalSecretNumber;
+
+        number.Should().Be(42);
+    }
+
+    [Fact]
     public void EventRaisedAssertionExample()
     {
         var monitorSubject = _sut.Monitor();
