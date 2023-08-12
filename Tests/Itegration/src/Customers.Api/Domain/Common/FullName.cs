@@ -15,6 +15,7 @@ public class FullName : ValueOf<string, FullName>
         if (!FullNameRegex.IsMatch(Value))
         {
             var message = $"{Value} is not a valid full name";
+
             throw new ValidationException(message, new []
             {
                 new ValidationFailure(nameof(FullName), message)

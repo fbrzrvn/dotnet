@@ -20,32 +20,39 @@ public class CustomerService : ICustomerService
     public async Task<bool> CreateAsync(Customer customer)
     {
         var existingUser = await _customerRepository.GetAsync(customer.Id.Value);
+
         if (existingUser is not null)
         {
             var message = $"A user with id {customer.Id} already exists";
-            throw new ValidationException(message, GenerateValidationError(message));
+
+            throw new ValidationException(message, GenerateValidationError(nameof(Customer), message));
         }
 
         var isValidGitHubUser = await _gitHubService.IsValidGitHubUser(customer.GitHubUsername.Value);
+
         if (!isValidGitHubUser)
         {
             var message = $"There is no GitHub user with username {customer.GitHubUsername.Value}";
-            throw new ValidationException(message, GenerateValidationError(message));
+
+            throw new ValidationException(message, GenerateValidationError(nameof(customer.GitHubUsername), message));
         }
         
         var customerDto = customer.ToCustomerDto();
+
         return await _customerRepository.CreateAsync(customerDto);
     }
 
     public async Task<Customer?> GetAsync(Guid id)
     {
         var customerDto = await _customerRepository.GetAsync(id);
+
         return customerDto?.ToCustomer();
     }
 
     public async Task<IEnumerable<Customer>> GetAllAsync()
     {
         var customerDtos = await _customerRepository.GetAllAsync();
+
         return customerDtos.Select(x => x.ToCustomer());
     }
 
@@ -54,10 +61,12 @@ public class CustomerService : ICustomerService
         var customerDto = customer.ToCustomerDto();
         
         var isValidGitHubUser = await _gitHubService.IsValidGitHubUser(customer.GitHubUsername.Value);
+
         if (!isValidGitHubUser)
         {
             var message = $"There is no GitHub user with username {customer.GitHubUsername.Value}";
-            throw new ValidationException(message, GenerateValidationError(message));
+
+            throw new ValidationException(message, GenerateValidationError(nameof(customer.GitHubUsername), message));
         }
         
         return await _customerRepository.UpdateAsync(customerDto);
@@ -68,11 +77,11 @@ public class CustomerService : ICustomerService
         return await _customerRepository.DeleteAsync(id);
     }
 
-    private static ValidationFailure[] GenerateValidationError(string message)
+    private static ValidationFailure[] GenerateValidationError(string paramName, string message)
     {
         return new []
         {
-            new ValidationFailure(nameof(Customer), message)
+            new ValidationFailure(paramName, message)
         };
     }
 }

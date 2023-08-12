@@ -39,6 +39,7 @@ public class CustomerController : ControllerBase
         }
 
         var customerResponse = customer.ToCustomerResponse();
+
         return Ok(customerResponse);
     }
     
@@ -47,6 +48,7 @@ public class CustomerController : ControllerBase
     {
         var customers = await _customerService.GetAllAsync();
         var customersResponse = customers.ToCustomersResponse();
+
         return Ok(customersResponse);
     }
     
@@ -72,11 +74,7 @@ public class CustomerController : ControllerBase
     public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
         var deleted = await _customerService.DeleteAsync(id);
-        if (!deleted)
-        {
-            return NotFound();
-        }
 
-        return Ok();
+        return !deleted ? NotFound() : Ok();
     }
 }

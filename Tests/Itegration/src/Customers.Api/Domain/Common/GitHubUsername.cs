@@ -15,6 +15,7 @@ public class GitHubUsername : ValueOf<string, GitHubUsername>
         if (!UsernameRegex.IsMatch(Value))
         {
             var message = $"{Value} is not a valid username";
+
             throw new ValidationException(message, new []
             {
                 new ValidationFailure(nameof(GitHubUsername), message)

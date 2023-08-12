@@ -16,10 +16,12 @@ public class GitHubService : IGitHubService
     {
         var client = _httpClientFactory.CreateClient("GitHub");
         var response = await client.GetAsync($"/users/{username}");
+
         if (response.StatusCode == HttpStatusCode.Forbidden)
         {
             var responseBody = await response.Content.ReadFromJsonAsync<JsonObject>();
             var message = responseBody!["message"]!.ToString();
+
             throw new HttpRequestException(message);
         }
         

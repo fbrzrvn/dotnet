@@ -21,6 +21,7 @@ public class NpgsqlConnectionFactory : IDbConnectionFactory
     {
         var connection = new NpgsqlConnection(_connectionString);
         await connection.OpenAsync();
+
         return connection;
     }
 }

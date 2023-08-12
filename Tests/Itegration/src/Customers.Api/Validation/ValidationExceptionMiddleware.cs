@@ -31,12 +31,14 @@ public class ValidationExceptionMiddleware
                     ["traceId"] = context.TraceIdentifier
                 }
             };
+
             foreach (var validationFailure in exception.Errors)
             {
                 error.Errors.Add(new KeyValuePair<string, string[]>(
                     validationFailure.PropertyName, 
                     new[] { validationFailure.ErrorMessage }));
             }
+
             await context.Response.WriteAsJsonAsync(error);
         }
     }

@@ -16,6 +16,7 @@ public class Email : ValueOf<string, Email>
         if (!EmailRegex.IsMatch(Value))
         {
             var message = $"{Value} is not a valid email address";
+
             throw new ValidationException(message, new []
             {
                 new ValidationFailure(nameof(Email), message)

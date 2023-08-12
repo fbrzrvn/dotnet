@@ -4,3 +4,5 @@
 - Run docker compose for specific file: `docker compose -f .\docker-compose-viewer.yml up`
 - Rebuild docker compose without and cache: `docker compose -f .\docker-compose-full.yml build --no-cache`
 - Run docker compose for full application: `docker compose -f .\docker-compose-full.yml up`
+
+- Generate cert.pfx file `dotnet dev-certs https -ep cert.pfx -p Test1234!`
