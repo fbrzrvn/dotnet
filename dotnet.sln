@@ -25,7 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Indentity.Api", "WebApi-RES
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Api.Tests.Unit", "WebApi-REST\test\Movies.Api.Tests.Unit\Movies.Api.Tests.Unit.csproj", "{6F7FEBBB-2152-467D-883F-E1AB484DBDE8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3EDCEE34-A946-471C-A2DE-6DA0F687E650}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{3EDCEE34-A946-471C-A2DE-6DA0F687E650}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{42B602D3-7F3D-4CEF-AC4E-357943447CB2}"
 EndProject
@@ -35,17 +35,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{73A08EF1-8B5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D76B3487-4903-4BB6-BE49-6B56959FED5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customers.Api", "Tests\Itegration\src\Customers.Api\Customers.Api.csproj", "{474CCBB7-3886-474F-A7F4-148178191BCD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customers.Api", "Testing\Itegration\src\Customers.Api\Customers.Api
+.csproj", "{474CCBB7-3886-474F-A7F4-148178191BCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customers.Api.Tests.Integration", "Tests\Itegration\tests\Customers.Api.Tests.Integration\Customers.Api.Tests.Integration.csproj", "{4BF9D17B-41D1-4CB0-94F2-6ACB3FC3DBDC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customers.Api.Tests.Integration",
+"Testing\Itegration\tests\Customers.Api.Tests.Integration\Customers.Api.Tests.Integration.csproj",
+"{4BF9D17B-41D1-4CB0-94F2-6ACB3FC3DBDC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{56C07BC9-CBF1-4D43-B31C-7FD51416A841}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{60E46AD9-B214-4C83-AE3B-2738190290BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingTechniques", "Tests\Unit\src\TestingTechniques\TestingTechniques.csproj", "{CBF0D098-A709-451F-A634-ABD0D4885D74}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingTechniques",
+"Testing\Unit\src\TestingTechniques\TestingTechniques.csproj", "{CBF0D098-A709-451F-A634-ABD0D4885D74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingTechniques.Tests.Unit", "Tests\Unit\tests\TestingTechniques.Tests.Unit\TestingTechniques.Tests.Unit.csproj", "{318F77EB-2106-418C-A78D-1A9174475B2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingTechniques.Tests.Unit",
+"Testing\Unit\tests\TestingTechniques.Tests.Unit\TestingTechniques.Tests.Unit.csproj", "{318F77EB-2106-418C-A78D-1A9174475B2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
