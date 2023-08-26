@@ -10,7 +10,6 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     private readonly IHostEnvironment _environment;
     private readonly IApiVersionDescriptionProvider _provider;
 
-
     public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider, IHostEnvironment environment)
     {
         _provider = provider;
