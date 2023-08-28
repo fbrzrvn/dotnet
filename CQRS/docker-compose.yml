@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:8.0.29
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    environment:
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    healthcheck:
+      test:
+        [
+          'CMD',
+          '/usr/bin/mysql',
+          '--user=root',
+          '--password=password',
+          '--host=localhost',
+          --execute=SHOW TABLES;,
+          'sys',
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 20

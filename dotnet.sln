@@ -67,6 +67,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingTechniques.Tests.Unit", "Testing\Unit\tests\TestingTechniques.Tests.Unit\TestingTechniques.Tests.Unit.csproj", "{6D307A98-FFB2-4311-AF03-A1E0B0304A6F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CQRS", "CQRS", "{BD87F238-42BE-4C84-BD3C-E7664F71A254}"
+	ProjectSection(SolutionItems) = preProject
+		CQRS\docker-compose.yml = CQRS\docker-compose.yml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5F0DBE26-10A3-40E5-9170-FCA187E2FB71}"
 EndProject
