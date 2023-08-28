@@ -1,11 +1,18 @@
+using System.Reflection;
+using Application.UserProfiles.Queries;
+using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Swagger;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssemblies(typeof(GetAllUserProfilesQuery).GetTypeInfo().Assembly));
 
 builder.Services.AddApiVersioning(config =>
 {
@@ -23,6 +30,16 @@ builder.Services.AddVersionedApiExplorer(config =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
+
+string? connectionString = builder.Configuration.GetConnectionString("Default");
+MySqlServerVersion serverVersion = new(new Version(8, 0, 29));
+builder.Services.AddDbContext<DataContext>(options =>
+{
+    options.UseMySql(connectionString, serverVersion)
+        .LogTo(Console.WriteLine, LogLevel.Information)
+        .EnableSensitiveDataLogging()
+        .EnableDetailedErrors();
+});
 
 WebApplication app = builder.Build();
 
