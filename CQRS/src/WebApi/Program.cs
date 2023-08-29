@@ -1,4 +1,5 @@
 using System.Reflection;
+using Application;
 using Application.UserProfiles.Queries;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddAutoMapper(typeof(Program), typeof(IApplicationMarker));
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssemblies(typeof(GetAllUserProfilesQuery).GetTypeInfo().Assembly));
 
