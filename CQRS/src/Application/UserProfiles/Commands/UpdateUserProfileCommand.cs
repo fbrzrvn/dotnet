@@ -1,8 +1,9 @@
+using Domain.Aggregates.User;
 using MediatR;
 
 namespace Application.UserProfiles.Commands;
 
-public class UpdateUserProfileCommand : IRequest
+public class UpdateUserProfileCommand : IRequest<OperationResult<UserProfile>>
 {
     public Guid UserProfileId { get; set; }
 

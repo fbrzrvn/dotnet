@@ -1,3 +1,4 @@
+using Application;
 using Application.UserProfiles.Commands;
 using Application.UserProfiles.Queries;
 using AutoMapper;
@@ -12,7 +13,7 @@ namespace WebApi.Controllers.V1;
 [ApiController]
 [ApiVersion("1.0")]
 [Route(ApiEndpoints.Base)]
-public class UserProfilesController : ControllerBase
+public class UserProfilesController : BaseController
 {
     private readonly IMapper _mapper;
     private readonly IMediator _mediatr;
@@ -41,7 +42,12 @@ public class UserProfilesController : ControllerBase
     {
         GetUserProfileByIdQuery query = new() { UserProfileId = Guid.Parse(id) };
 
-        UserProfile response = await _mediatr.Send(query);
+        OperationResult<UserProfile> response = await _mediatr.Send(query);
+
+        if (response.IsError)
+        {
+            return HandleErrorResponse(response.Errors);
+        }
 
         UserProfileResponse? userProfile = _mapper.Map<UserProfileResponse>(response);
 
@@ -66,9 +72,9 @@ public class UserProfilesController : ControllerBase
         UpdateUserProfileCommand? command = _mapper.Map<UpdateUserProfileCommand>(userProfileRequest);
         command.UserProfileId = Guid.Parse(id);
 
-        await _mediatr.Send(command);
+        OperationResult<UserProfile> result = await _mediatr.Send(command);
 
-        return NoContent();
+        return result.IsError ? HandleErrorResponse(result.Errors) : NoContent();
     }
 
     [HttpDelete(ApiEndpoints.Id)]
@@ -76,8 +82,8 @@ public class UserProfilesController : ControllerBase
     {
         DeleteUserProfileCommand command = new() { UserProfileId = Guid.Parse(id) };
 
-        await _mediatr.Send(command);
+        OperationResult<UserProfile> result = await _mediatr.Send(command);
 
-        return NoContent();
+        return result.IsError ? HandleErrorResponse(result.Errors) : NoContent();
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.UserProfiles.CommandHandlers;
 
-internal class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfileCommand>
+internal class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfileCommand, OperationResult<UserProfile>>
 {
     private readonly DataContext _ctx;
 
@@ -15,17 +15,48 @@ internal class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfi
         _ctx = ctx;
     }
 
-    public async Task Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<UserProfile>> Handle(UpdateUserProfileCommand request,
+        CancellationToken cancellationToken)
     {
-        UserProfile? userProfile = await _ctx.UserProfiles.FirstOrDefaultAsync(userProfile =>
-            userProfile.UserProfileId == request.UserProfileId, cancellationToken);
+        OperationResult<UserProfile> result = new();
 
-        UserInfo userInfo = UserInfo.CreateUserInfo(request.FirstName, request.LastName, request.EmailAddress,
-            request.PhoneNumber, request.DateOfBirth, request.CurrentCity);
+        try
+        {
+            UserProfile? userProfile = await _ctx.UserProfiles.FirstOrDefaultAsync(userProfile =>
+                userProfile.UserProfileId == request.UserProfileId, cancellationToken);
 
-        userProfile!.UpdateUserInfo(userInfo);
+            if (userProfile is null)
+            {
+                result.IsError = true;
+                result.Errors.Add(
+                    new Error
+                    {
+                        Code = ErrorCode.NotFound,
+                        Message = $"No user found with profile Id: {request.UserProfileId}"
+                    }
+                );
 
-        _ctx.UserProfiles.Update(userProfile);
-        await _ctx.SaveChangesAsync(cancellationToken);
+                return result;
+            }
+
+            UserInfo userInfo = UserInfo.CreateUserInfo(request.FirstName, request.LastName, request.EmailAddress,
+                request.PhoneNumber, request.DateOfBirth, request.CurrentCity);
+
+            userProfile.UpdateUserInfo(userInfo);
+
+            _ctx.UserProfiles.Update(userProfile);
+            await _ctx.SaveChangesAsync(cancellationToken);
+
+            result.Payload = userProfile;
+        }
+        catch (Exception ex)
+        {
+            result.IsError = true;
+            result.Errors.Add(
+                new Error { Code = ErrorCode.InternalServerError, Message = ex.Message }
+            );
+        }
+
+        return result;
     }
 }
