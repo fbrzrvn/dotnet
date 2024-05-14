@@ -1,0 +1,7 @@
+version: '3.9'
+
+services:
+  identity-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+
