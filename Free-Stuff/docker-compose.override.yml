@@ -1,0 +1,5 @@
+version: '3.9'
+services:
+  fs-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development

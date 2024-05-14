@@ -1,0 +1,75 @@
+version: '3.9'
+
+services:
+  fs-db:
+    container_name: mysql
+    image: mysql:latest
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    environment:
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    healthcheck:
+      test:
+        [
+          'CMD',
+          '/usr/bin/mysql',
+          '--user=root',
+          '--password=password',
+          '--host=localhost',
+          --execute=SHOW TABLES;,
+          'sys',
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      local-network:
+        aliases:
+          - mysql
+
+  fs-mb:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    hostname: fs-mb
+    volumes:
+      - ./.containers/queue/data/:/var/lib/rabbitmq
+      - ./.containers/queue/log/:/var/log/rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: 'guest'
+      RABBITMQ_DEFAULT_PASS: 'guest'
+    networks:
+      local-network:
+        aliases:
+          - rabbitmq
+  
+  fs-api:
+    container_name: api
+    image: freestuff.api
+    build:
+      context: .
+      dockerfile: src/FreeStuff.Api/Dockerfile
+    ports:
+      - '8000:80'
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings:DefaultConnection=fs-db=db;Port=3306;Database=fs-db;User=root;Password=password
+    depends_on:
+      fs-db:
+        condition: service_healthy
+    networks:
+      local-network:
+        aliases:
+          - api
+
+networks:
+  local-network:
+    name: local-network-bridge
+    driver: bridge
+    ipam:
+      driver: default
